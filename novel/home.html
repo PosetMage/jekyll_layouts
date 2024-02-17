@@ -9,17 +9,22 @@ layout: base
 </main>
 
 <br>
-<br>
+
+{% assign pageCount = 0 %}
 {% assign category_pages = site.pages | where_exp: "item", "item.categories contains page.categories" %}
 {% assign sorted_pages = category_pages | sort: 'url' | reverse %}
 {% for p in sorted_pages %}
     {% assign filename = p.url | split: '/' %}
     {% assign filename_no_html = filename.last | remove: '.html' %}
-    {% unless filename_no_html == 'toc' or filename_no_html == 'feed.xml'%}
+    {% unless filename_no_html == 'toc' or filename_no_html == 'feed.xml' or filename_no_html == page.categories %}
         <a style="font-size: 1em;" href="{{ p.url | relative_url }}">{{ filename_no_html }}</a><br> 
+        {% assign pageCount = pageCount | plus: 1 %}
     {% endunless %}
 {% endfor %}
 
+<div style="display: none;">
+    Total page number: {{ pageCount }}
+</div>
 <br>
 
 <a href="/Novel/{{ page.categories }}/feed.xml">

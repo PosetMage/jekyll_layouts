@@ -22,8 +22,17 @@ layout: base
       margin-left: 1em;
     }
   
-  
-  </style>  
+
+    .navigation-table table {
+      width: 100%;
+      border-collapse: collapse;
+      border: none;
+    }
+
+    .navigation-table td {
+      border: none;
+    }
+</style> 
   
   <div class="page-container">
     <aside class="sidebar" id="outline">
@@ -32,13 +41,21 @@ layout: base
   
   
     <main class="page-content">
-      <div class="navigation-links">
-        <div class="prev-link">
-        </div>
-        <div class="next-link">
-        </div>
+      <div class="navigation-table">
+        <table>
+          <tr>
+            <td class="prev-link" style="text-align: left;">
+            </td>
+            <td class="spacer" style="width: 100%; text-align: center;">
+              <a href="./">Home</a>
+            </td>
+            <td class="next-link" style="text-align: right;">
+            </td>
+          </tr>
+        </table>
       </div>
-  
+
+      
       <div>
         <article class="post">
           {% seo %}
@@ -49,12 +66,20 @@ layout: base
         </article>
       </div>
   
-      <div class="navigation-links">
-        <div class="prev-link">
-        </div>
-        <div class="next-link">
-        </div>
+      <div class="navigation-table">
+        <table>
+          <tr>
+            <td class="prev-link" style="text-align: left;">
+            </td>
+            <td class="spacer" style="width: 100%; text-align: center;">
+              <a href="./">Home</a>
+            </td>
+            <td class="next-link" style="text-align: right;">
+            </td>
+          </tr>
+        </table>
       </div>
+      
     </main>
     
   
@@ -73,61 +98,97 @@ layout: base
       text-align: right; /* Centers the text inside each container */
     }
   </style>
-  
-  
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      // Function to format the page number to a 4-digit string
-      function formatPageNumber(number) {
-        return number.toString().padStart(4, '0');
+
+
+<script>
+// Function to fetch the content and extract the number
+function fetchAndExtractNumber() {
+  return fetch('./') // Make sure this path is correct
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
       }
-  
-      // Function to get the current page number
-      function getCurrentPageNumber() {
-        const path = window.location.pathname;
-        return parseInt(path.match(/(\d+)\.html$/)[1], 10);
+      return response.text();
+    })
+    .then(text => {
+      const searchString = "Total page number: ";
+      const index = text.indexOf(searchString);
+      if (index !== -1) {
+        const start = index + searchString.length;
+        const end = text.indexOf("<", start);
+        const numberString = text.substring(start, end !== -1 ? end : text.length);
+        const pageNumber = parseInt(numberString, 10);
+        console.log(`Extracted number: ${pageNumber}`);
+        return pageNumber; // Return the pageNumber for further processing
+      } else {
+        console.log("String not found.");
+        return null; // Return null or some default value
       }
-  
-      // Function to create a link element
-      function createLink(text, pageNumber) {
-        const link = document.createElement('a');
-        link.href = `./${formatPageNumber(pageNumber)}.html`;
-        link.textContent = text;
-        return link;
-      }
-  
-      // Function to add a link to elements with a specific class
-      function addLinkToElements(link, className) {
-        const elements = document.querySelectorAll(`.${className}`);
-        elements.forEach(element => {
-          const clone = link.cloneNode(true);
-          element.appendChild(clone);
-        });
-      }
-  
-      const currentPageNumber = getCurrentPageNumber();
-  
-      // Create and add the 'prev' link if there is a previous page
-      if (currentPageNumber > 1) {
-        const prevLink = createLink('←prev', currentPageNumber - 1);
-        addLinkToElements(prevLink, 'prev-link');
-      }
-  
-      // Create and add the 'next' link if there is a next page
-      // Note: Update this condition as per your total page count if needed
+    });
+}
+
+// Call the function
+</script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Function to format the page number to a 4-digit string
+    function formatPageNumber(number) {
+      return number.toString().padStart(4, '0');
+    }
+
+    // Function to get the current page number
+    function getCurrentPageNumber() {
+      const path = window.location.pathname;
+      return parseInt(path.match(/(\d+)\.html$/)[1], 10);
+    }
+
+    // Function to create a link element
+    function createLink(text, pageNumber) {
+      const link = document.createElement('a');
+      link.href = `./${formatPageNumber(pageNumber)}.html`;
+      link.textContent = text;
+      return link;
+    }
+
+    // Function to add a link to elements with a specific class
+    function addLinkToElements(link, className) {
+      const elements = document.querySelectorAll(`.${className}`);
+      elements.forEach(element => {
+        const clone = link.cloneNode(true);
+        element.appendChild(clone);
+      });
+    }
+
+    const currentPageNumber = getCurrentPageNumber();
+
+    // Create and add the 'prev' link if there is a previous page
+    if (currentPageNumber > 1) {
+      const prevLink = createLink('←prev', currentPageNumber - 1);
+      addLinkToElements(prevLink, 'prev-link');
+    }
+
+    fetchAndExtractNumber().then(totalPages => {
+    if (totalPages !== null && currentPageNumber < totalPages) {
       const nextPageNumber = currentPageNumber + 1;
       const nextLink = createLink('next→', nextPageNumber);
       addLinkToElements(nextLink, 'next-link');
-    });
-  </script>
-  
+    }
+  });
+    // Create and add the 'next' link if there is a next page
+    // Note: Update this condition as per your total page count if needed
+    
 
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      fetch('/Novel/{{ page.categories }}/toc.html')
-        .then(response => response.text())
-        .then(data => {
-          document.getElementById('outline').innerHTML = data;
-        });
-    });
-  </script>
+  });
+</script>
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    fetch('/Novel/{{ page.categories }}/toc.html')
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById('outline').innerHTML = data;
+      });
+  });
+</script>
