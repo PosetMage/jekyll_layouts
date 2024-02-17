@@ -1,0 +1,25 @@
+---
+layout: default
+---
+
+  
+
+<a href="/Novel/{{ page.categories }}/feed.xml">
+    <svg class="svg-icon orange">
+    <use xlink:href="{{ 'assets/minima-social-icons.svg#rss' | relative_url }}"></use>
+    </svg><br>訂閱<br>{{ page.categories }}
+</a>
+<br>
+<br>
+{% assign category_pages = site.pages | where_exp: "item", "item.categories contains page.categories" %}
+{% assign sorted_pages = category_pages | sort: 'url' | reverse %}
+{% for p in sorted_pages %}
+    {% assign filename = p.url | split: '/' %}
+    {% assign filename_no_html = filename.last | remove: '.html' %}
+    {% unless filename_no_html == 'toc' or filename_no_html == 'feed.xml'%}
+        <a style="font-size: 1em;" href="{{ p.url | relative_url }}">{{ filename_no_html }}</a><br> 
+    {% endunless %}
+{% endfor %}
+
+
+

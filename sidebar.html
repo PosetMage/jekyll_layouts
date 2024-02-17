@@ -1,0 +1,61 @@
+<head>
+  <style>
+    .page-container {
+      display: flex;
+      flex-wrap: wrap; /* Allow items to wrap as needed */
+      word-wrap: break-word;
+    }
+
+    .sidebar p {
+      margin: 0;
+      padding: 0;
+      line-height: 1.2em;
+    }
+        
+    /* Base styles for smaller screens */
+    @media (max-width: 999px) {
+      .sidebar {
+        display: none; /* Hide the sidebar on smaller screens */
+      }
+
+      .page-content {
+        flex-grow: 1; /* Consumes the rest of the space */  
+        max-width: 100%;
+      }
+    }
+
+    /* Styles for larger screens */
+    @media (min-width: 1000px) { /* Adjust this breakpoint as needed */
+          .sidebar {
+          position: fixed;
+          flex: 0 0 12em; /* Fixed width for the sidebar */
+          width: 130px;
+        }
+
+        .page-content {
+          flex-grow: 1; /* Consumes the rest of the space */
+          margin-left: 200px;
+          margin-right: 200px;          
+          max-width: calc(100% - 150px);
+        }
+    }
+  </style>
+</head>
+
+</style>  
+
+<div class="page-container">
+  <aside class="sidebar" id="outline">
+    <!-- Sidebar content will be loaded here -->
+  </aside>
+
+  <main class="page-content">
+    <article class="post">
+      {% seo %}
+      <div class="post-content">
+        {{ content }}
+      </div>
+    </article>
+  </main>
+
+</div>
