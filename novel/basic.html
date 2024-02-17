@@ -2,18 +2,38 @@
 layout: base
 ---
 
-
 <style>
-    .page-container {
-      display: flex;
-      width: 100%;
-    }
-  
+  .page-container {
+    display: flex;
+    flex-wrap: wrap; /* Allow items to wrap as needed */
+    word-wrap: break-word;
+  }
+
+  .sidebar p {
+    margin: 0;
+    padding: 0;
+    line-height: 1.2em;
+  }
+      
+  /* Base styles for smaller screens */
+  @media (max-width: 999px) {
     .sidebar {
-      max-width: 3em;
-      overflow: auto;
+      display: none; /* Hide the sidebar on smaller screens */
     }
-  
+
+    .page-content {
+      flex-grow: 1; /* Consumes the rest of the space */  
+      max-width: 100%;
+    }
+  }
+
+  /* Styles for larger screens */
+  @media (min-width: 1000px) { /* Adjust this breakpoint as needed */
+      .sidebar {
+        max-width: 3em;
+        overflow: auto;
+      }  
+
     .page-content {
       flex-grow: 1; 
       overflow: auto; 
@@ -21,7 +41,8 @@ layout: base
       max-width: calc(100% - 4em);
       margin-left: 1em;
     }
-  
+  }
+    
 
     .navigation-table table {
       width: 100%;
@@ -51,7 +72,9 @@ layout: base
           <td class="prev-link" style="text-align: left;">
           </td>
           <td class="spacer" style="width: 100%; text-align: center;">
-            <a href="./">Home</a>
+              {% assign filename = page.url | split: '/' | last %}
+              {% assign pagename = filename | remove: '.html' %}
+              {{ pagename }}
           </td>
           <td class="next-link" style="text-align: right;">
           </td>
