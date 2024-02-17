@@ -32,73 +32,60 @@ layout: base
     .navigation-table td {
       border: none;
     }
-</style> 
-  
-  <div class="page-container">
-    <aside class="sidebar" id="outline">
-      <!-- Sidebar content will be loaded here -->
-    </aside>
-  
-  
-    <main class="page-content">
-      <div class="navigation-table">
-        <table>
-          <tr>
-            <td class="prev-link" style="text-align: left;">
-            </td>
-            <td class="spacer" style="width: 100%; text-align: center;">
-              <a href="./">Home</a>
-            </td>
-            <td class="next-link" style="text-align: right;">
-            </td>
-          </tr>
-        </table>
-      </div>
 
-      
-      <div>
-        <article class="post">
-          {% seo %}
-          <h1 class="post-title">{{ page.title }}</h1>
-          <div class="post-content">
-            {{ content }}
-          </div>
-        </article>
-      </div>
-  
-      <div class="navigation-table">
-        <table>
-          <tr>
-            <td class="prev-link" style="text-align: left;">
-            </td>
-            <td class="spacer" style="width: 100%; text-align: center;">
-              <a href="./">Home</a>
-            </td>
-            <td class="next-link" style="text-align: right;">
-            </td>
-          </tr>
-        </table>
-      </div>
-      
-    </main>
-    
-  
-    
-  </div>
-  
-  <style>
-    .navigation-links {
-      display: flex;
-      justify-content: space-between; /* Aligns children to each end */
-      align-items: center; /* Aligns children vertically in the center */
-    }
-  
-    /* Optional: Additional styling for individual link containers */
     .next-link {
       text-align: right; /* Centers the text inside each container */
     }
-  </style>
+</style> 
+  
+<div class="page-container">
+  <aside class="sidebar" id="outline">
+    <!-- Sidebar content will be loaded here -->
+  </aside>
 
+
+  <main class="page-content">
+    <div class="navigation-table">
+      <table>
+        <tr>
+          <td class="prev-link" style="text-align: left;">
+          </td>
+          <td class="spacer" style="width: 100%; text-align: center;">
+            <a href="./">Home</a>
+          </td>
+          <td class="next-link" style="text-align: right;">
+          </td>
+        </tr>
+      </table>
+    </div>
+    
+    <div>
+      <article class="post">
+        {% seo %}
+        <h1 class="post-title">{{ page.title }}</h1>
+        <div class="post-content">
+          {{ content }}
+        </div>
+      </article>
+    </div>
+
+    <div class="navigation-table">
+      <table>
+        <tr>
+          <td class="prev-link" style="text-align: left;">
+          </td>
+          <td class="spacer" style="width: 100%; text-align: center;">
+            <a href="./">Home</a>
+          </td>
+          <td class="next-link" style="text-align: right;">
+          </td>
+        </tr>
+      </table>
+    </div>
+    
+  </main>
+  
+</div>
 
 <script>
 // Function to fetch the content and extract the number
