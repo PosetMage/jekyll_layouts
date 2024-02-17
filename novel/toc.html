@@ -3,7 +3,7 @@ layout: null
 ---
   
 {% assign category_pages = site.pages | where_exp: "item", "item.categories contains page.categories" %}
-{% assign sorted_pages = category_pages | sort: 'url' | reverse %}
+{% assign sorted_pages = category_pages | sort: 'url'%}
 {% for p in sorted_pages %}
     {% assign filename = p.url | split: '/' %}
     {% assign filename_no_html = filename.last | remove: '.html' %}
