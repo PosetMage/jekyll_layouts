@@ -2,7 +2,8 @@
 layout: base
 ---
 
-<h1>{{ page.Name }}</h1>
+<title>{{ page.title }}</title>
+<h1>{{ page.title }}</h1>
 
 <style>
     td {
@@ -66,7 +67,7 @@ layout: base
   <table style="width: 100%; table-layout: fixed;">
     <tr>
       <td class="cyan-bg">名稱</td>
-      <td class="align-left">{{ page.Name }}</td>
+      <td class="align-left">{{ page.title }}</td>
       <td rowspan="7">{{ page.Image }}</td>
     <tr>
       <td class="cyan-bg">種族 性別</td>
@@ -181,3 +182,4 @@ layout: base
 </table>
 </div>
   
+{{ content }}
