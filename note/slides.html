@@ -2,7 +2,7 @@
 layout: base
 ---
 
-{% include sidebar.html%}
+{% include sidebar.html %}
 
 <style>
   .enlarged-text {
@@ -10,14 +10,13 @@ layout: base
   }
 </style>
 
-
-
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <script>
-  // make is as slide modes
+  // Initialize currentSlide as a global variable to share state between functions
+  var currentSlide = 0;
+
   $(document).ready(function() {
-      var currentSlide = 0;
       var totalSlides = $('.slide').length;
   
       // Hide all slides except the first one
@@ -34,66 +33,47 @@ layout: base
   
       // When the Next Slide button is clicked
       $('#nextSlide').click(function() {
-          $('.slide').eq(currentSlide).hide();
-          currentSlide = (currentSlide + 1) % totalSlides;
-          $('.slide').eq(currentSlide).show();
-          window.scrollTo(0, 100);
-          $('#prevSlide').prop('disabled', false);
-          if (currentSlide === totalSlides - 1) $('#nextSlide').prop('disabled', true);
+          navigateToSlide((currentSlide + 1) % totalSlides);
       });
   
       // When the Previous Slide button is clicked
       $('#prevSlide').click(function() {
-          $('.slide').eq(currentSlide).hide();
-          currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
-          $('.slide').eq(currentSlide).show();
-          window.scrollTo(0, 100);
-          $('#nextSlide').prop('disabled', false);
-          if (currentSlide === 0) $('#prevSlide').prop('disabled', true);
+          navigateToSlide((currentSlide - 1 + totalSlides) % totalSlides);
       });
   });
+
+  // Centralized navigation function to handle slide changes
+  function navigateToSlide(slideIndex) {
+      $('.slide').hide().eq(slideIndex).show();
+      currentSlide = slideIndex;
+      window.scrollTo(0, 100);
+      $('#prevSlide').prop('disabled', currentSlide === 0);
+      $('#nextSlide').prop('disabled', currentSlide === $('.slide').length - 1);
+  }
 </script>
 
 <script>
   // gen toc
   document.addEventListener('DOMContentLoaded', function() {
-      // Initialize the Table of Contents HTML with a link to the previous layer
       var tocHTML = '<p><a href="../">Previous Layer</a></p>';
   
-      // Iterate over each slide
       $('.slide').each(function(index) {
-          // Create an ID for each slide based on its index
           var slideId = 'slide-' + index;
           $(this).attr('id', slideId);
   
-          // Fetch the slide's title
           var title = $(this).find('h2').text();
-  
-          // Compile the ToC entry for this slide without additional indent or font size adjustments
           tocHTML += '<p><a href="#' + slideId + '">' + '◇ ' + title + '</a></p>';
       });
   
-      // Inject the compiled ToC HTML into the sidebar
       document.getElementById('outline').innerHTML = tocHTML;
   
-      // Add click event listener for ToC links to handle navigation
       $('#outline a').on('click', function(e) {
-          e.preventDefault(); // Prevent the default anchor behavior
+          e.preventDefault();
   
-          var targetId = $(this).attr('href').substring(1); // Extract the target slide's ID
-          var currentSlide = $('#' + targetId).index('.slide'); // Determine the index of the target slide
+          var targetId = $(this).attr('href').substring(1);
+          var targetSlide = $('#' + targetId).index('.slide');
   
-          // Hide the current visible slide and show the target slide
-          $('.slide').hide().eq(currentSlide).show();
-  
-          // Update the global currentSlide variable and adjust navigation buttons accordingly
-          window.currentSlide = currentSlide; // Assuming currentSlide is a global variable used for navigation
-          $('#prevSlide').prop('disabled', currentSlide === 0);
-          $('#nextSlide').prop('disabled', currentSlide === $('.slide').length - 1);
-  
-          // Scroll to the top of the slide or an anchor within it
-          window.scrollTo({top: $('#' + targetId).offset().top, behavior: 'smooth'});
+          navigateToSlide(targetSlide); // Use the centralized navigation function
       });
   });
-  </script>
-  
+</script>
