@@ -10,13 +10,23 @@ layout: base
     }
 
     td {
-    width: 400px; /* Set the width of each table cell */
-    vertical-align: middle;
+        width: 400px; /* Set the width of each table cell */
+        vertical-align: middle;
     }
 
     td img {
-    width: 100%; /* Make the image fit within the table cell */
-    height: auto; /* Let the image height adjust automatically */
+        width: 100%; /* Make the image fit within the table cell */
+        height: auto; /* Let the image height adjust automatically */
+    }
+
+    .slide-title-bottom {
+        text-align: right;
+        padding-top: 20px; /* Adjust as needed */
+        font-size: 1em; /* Adjust based on preference */
+    }
+
+    h1 {
+        display: none; /* Hide the h1 title */
     }
 </style>
 
@@ -49,6 +59,12 @@ layout: base
       // When the Previous Slide button is clicked
       $('#prevSlide').click(function() {
           navigateToSlide((currentSlide - 1 + totalSlides) % totalSlides);
+      });
+
+      // Append the h1 content to each slide dynamically
+      var titleText = $('h1').text();
+      $('.slide').each(function() {
+          $(this).append('<div class="slide-title-bottom"><em>' + titleText + '</em></div>');
       });
   });
 
