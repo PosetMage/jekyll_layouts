@@ -1,5 +1,5 @@
 ---
-layout: page
+layout: page/note/basic
 ---
 
 <style>
@@ -14,23 +14,62 @@ layout: page
     line-height: 1;
     margin-left: 20px;
   }
+  
+  .toggle {
+  cursor: pointer;
+  border: 1px solid black; /* Boundary around the + and - */
+  padding: 0 5px;
+  margin-right: 5px;
+  }
+
+  .post-count {
+  font-weight: normal;
+  color: grey;
+  margin-left: 10px;
+  }
 </style>
 
 
-<div id="archives">
-{% for tag in site.tags %}
-  <div class="archive-group">
-    {% capture tag_name %}{{ tag | first }}{% endcapture %}
-    <div id="#{{ tag_name | slugize }}"></div>
 
-    <h3 class="tag-head">{{ tag_name }}</h3>
-    <a name="{{ tag_name | slugize }}"></a>
-    {% assign posts = site.tags[tag_name] %}
-    {% for post in posts %}
-    <article class="archive-item">
-      <h6>{% if forloop.last %}└{% else %}├{% endif %} <a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></h6>
-    </article>
-    {% endfor %}
-  </div>
-{% endfor %}
+<div id="archives">
+  {% for tag in site.tags %}
+    <div class="archive-group">
+      {% capture tag_name %}{{ tag | first }}{% endcapture %}
+      <div id="#{{ tag_name | slugize }}"></div>
+  
+      <!-- Updated part to include post count -->
+      <h2 class="tag-head" style="font-size: 1em;">
+        <span class="toggle">+</span> {{ tag_name }} <span class="post-count">({{ site.tags[tag_name].size }})</span>
+      </h2>
+  
+      <div class="posts-list" style="display:none;">
+        {% assign posts = site.tags[tag_name] %}
+        {% for post in posts %}
+        <article class="archive-item">
+          {% if forloop.last %}└{% else %}├{% endif %} <a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a>
+        </article>
+        {% endfor %}
+      </div>
+    </div>
+  {% endfor %}
 </div>
+  
+  
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const toggles = document.querySelectorAll('.toggle');
+    toggles.forEach(toggle => {
+      toggle.addEventListener('click', function() {
+        const postsList = this.parentElement.nextElementSibling; // selects .posts-list
+        if (postsList.style.display === 'none') {
+          postsList.style.display = 'block';
+          this.textContent = '-';
+        } else {
+          postsList.style.display = 'none';
+          this.textContent = '+';
+        }
+      });
+    });
+  });
+</script>
+    
