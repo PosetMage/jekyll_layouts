@@ -19,15 +19,22 @@ layout: page/note/basic
       {% assign last_element = file_path_array | last %}
       {% if last_element contains ".html" %}
         {% if file.title %}
-          <li><a href="./{{ last_element }}">{{ file.title }}</a></li>
+          <li><a href="./{{ last_element }}"><span class="uri-decode">{{ file.title }}</span></a></li>
         {% else %}
-          <li><a href="./{{ last_element }}">{{ last_element | replace: '.html', '' | replace: '%20', ' ' }}</a></li>
+          <li><a href="./{{ last_element }}"><span class="uri-decode">{{ last_element | replace: '.html', '' }}</span></a></li>
         {% endif %}
       {% else %}
-        <li><a href="./{{ last_element }}/">{{ last_element }}</a></li>
+        <li><a href="./{{ last_element }}/"><span class="uri-decode">{{ last_element }}</span></a></li>
       {% endif %}
     {% endif %}
   {% endfor %}
 
   </ul>
 </div>
+
+<script src="{{ '/assets/js/URIDecoder.js' | relative_url }}"></script>
+
+
+<script>
+
+</script>
