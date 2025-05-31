@@ -5,105 +5,10 @@ layout: base
 <script type="module" src="https://posetmage.com/cdn/lit3/sidebar-component.js"></script>
 <sidebar-component></sidebar-component>
 
+<script type="module" src="https://posetmage.com/cdn/lit3/slides-component.js"></script>
+<slides-component></slides-component>
+
+
 {{ content }}
 
 
-<style>
-    .enlarged-text {
-        font-size: 3em; /* Change this value to adjust the size */
-    }
-
-    td {
-        width: 400px; /* Set the width of each table cell */
-        vertical-align: middle;
-    }
-
-    td img {
-        width: 100%; /* Make the image fit within the table cell */
-        height: auto; /* Let the image height adjust automatically */
-    }
-
-    .slide-title-bottom {
-        text-align: right;
-        padding-top: 20px; /* Adjust as needed */
-        font-size: 1em; /* Adjust based on preference */
-    }
-
-    h1 {
-        display: none; /* Hide the h1 title */
-    }
-</style>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-<script>
-  // Initialize currentSlide as a global variable to share state between functions
-  var currentSlide = 0;
-
-  $(document).ready(function() {
-      var totalSlides = $('.slide').length;
-  
-      // Hide all slides except the first one
-      $('.slide').hide();
-      $('.slide').eq(currentSlide).show();
-  
-      // Add the navigation buttons
-      var prevSlideButton = '<button id="prevSlide" style="position: fixed; left: 10px; bottom: 10px; font-size: 2em;">←</button>';
-      var nextSlideButton = '<button id="nextSlide" style="position: fixed; right: 10px; bottom: 10px; font-size: 2em;">→</button>';
-      $("body").append(prevSlideButton, nextSlideButton);
-  
-      // Initially disable the Previous Slide button
-      $('#prevSlide').prop('disabled', true);
-  
-      // When the Next Slide button is clicked
-      $('#nextSlide').click(function() {
-          navigateToSlide((currentSlide + 1) % totalSlides);
-      });
-  
-      // When the Previous Slide button is clicked
-      $('#prevSlide').click(function() {
-          navigateToSlide((currentSlide - 1 + totalSlides) % totalSlides);
-      });
-
-      // Append the h1 content to each slide dynamically
-      //var titleText = $('h1').text();
-      //$('.slide').each(function() {
-      //    $(this).append('<div class="slide-title-bottom"><em>' + titleText + '</em></div>');
-      //});
-  });
-
-  // Centralized navigation function to handle slide changes
-  function navigateToSlide(slideIndex) {
-      $('.slide').hide().eq(slideIndex).show();
-      currentSlide = slideIndex;
-      window.scrollTo(0, 100);
-      $('#prevSlide').prop('disabled', currentSlide === 0);
-      $('#nextSlide').prop('disabled', currentSlide === $('.slide').length - 1);
-  }
-</script>
-
-<script>
-  // gen toc
-  document.addEventListener('DOMContentLoaded', function() {
-      var tocHTML = '<p><a href="../">Previous Layer</a></p>';
-  
-      $('.slide').each(function(index) {
-          var slideId = 'slide-' + index;
-          $(this).attr('id', slideId);
-  
-          var title = $(this).find('h2').text();
-          tocHTML += '<p><a href="#' + slideId + '">' + '◇ ' + title + '</a></p>';
-      });
-  
-      document.getElementById('outline').innerHTML = tocHTML;
-  
-      $('#outline a').on('click', function(e) {
-          e.preventDefault();
-  
-          var targetId = $(this).attr('href').substring(1);
-          var targetSlide = $('#' + targetId).index('.slide');
-  
-          navigateToSlide(targetSlide); // Use the centralized navigation function
-      });
-  });
-</script>
