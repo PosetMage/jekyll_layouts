@@ -2,10 +2,13 @@
 layout: base
 ---
 
+<script type="module" src="https://posetmage.com/cdn/lit3/sidebar-component.js"></script>
+<sidebar-component></sidebar-component>
+
+
 <h1>{{ page.title }}</h1>
 
-
-{%- include sidebar.html -%}
+{{ content }}
 
 <script>
     var parentDirectory = "/Blog/"; // This variable can be used in other scripts
