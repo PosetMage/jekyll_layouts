@@ -2,13 +2,14 @@
 layout: base
 ---
 
-<script type="module" src="https://posetmage.com/cdn/lit3/sidebar-component.js"></script>
-<sidebar-component></sidebar-component>
-
-<script type="module" src="https://posetmage.com/cdn/lit3/slides-component.js"></script>
+<script type="module" src="https://posetmage.com/wc/slides.es.js"></script>
+<script type="module" src="https://posetmage.com/wc/doc_ui.es.js"></script>
 <slides-component></slides-component>
 
+<sidebar-component>
+	<table-of-contents>
+</sidebar-component>
 
+<heading-id-injector>
 {{ content }}
-
-
+</heading-id-injector>
