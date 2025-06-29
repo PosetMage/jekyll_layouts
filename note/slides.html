@@ -2,6 +2,20 @@
 layout: base
 ---
 
+<script>
+  window.addEventListener('DOMContentLoaded', () => {
+    const header = document.querySelector('.site-header');
+    if (header) header.style.display = 'none';
+
+    const footerWrapper = document.querySelector('.footer-col-wrapper');
+    if (footerWrapper) footerWrapper.style.display = 'none';
+
+    const socialMediaList = document.querySelector('div.social-media-list[inject-root="social-media-list"]');
+    if (socialMediaList) socialMediaList.style.display = 'none';
+  });
+</script>
+
+
 <script type="module" src="https://posetmage.com/wc/slides.es.js"></script>
 <script type="module" src="https://posetmage.com/wc/doc_ui.es.js"></script>
 <slides-component></slides-component>
