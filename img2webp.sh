@@ -1,7 +1,8 @@
 #!/bin/bash
 
-# Recursively find all .png and .jpg files under the current directory
-find . \( -iname "*.png" -o -iname "*.jpg" \) -print0 | while IFS= read -r -d $'\0' file; do
+# Recursively find all .png and .jpg files under the current directory,
+# but skip anything under ./_site
+find . -path "./_site" -prune -o \( -iname "*.png" -o -iname "*.jpg" \) -print0 | while IFS= read -r -d $'\0' file; do
   # Get the directory path of the file
   dirpath=$(dirname "$file")
   # Get the filename without the extension

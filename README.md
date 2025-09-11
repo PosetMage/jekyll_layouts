@@ -13,14 +13,14 @@ jekyll new . --force
 
 ## run repo
 
-env build
+env
 ```
 gem install bundler
 bundle install
 bundle exec jekyll build
 ```
 
-run local (cannot use 5000)
+run local (cannot use 5000?)
 start serve
 ```
 bundle exec jekyll serve --port 4001
