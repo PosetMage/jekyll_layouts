@@ -12,6 +12,13 @@ layout: base
 
     const socialMediaList = document.querySelector('div.social-media-list[inject-root="social-media-list"]');
     if (socialMediaList) socialMediaList.style.display = 'none';
+
+    // Remove the line between body and footer
+    const footer = document.querySelector('.site-footer');
+    if (footer) {
+      footer.style.borderTop = 'none';
+      footer.style.border = 'none';
+    }
   });
 </script>
 
