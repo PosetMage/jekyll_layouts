@@ -1,16 +1,24 @@
 ---
-layout: null
+layout: none
 ---
 
-{% assign category_pages = site.pages | where_exp: "item", "item.categories contains page.categories" %}
-{% assign category_pages = category_pages | where_exp: "item", "item.layout == 'page/novel/basic'" %}
-{% assign sorted_pages = category_pages | sort: 'url' | reverse %}
-{% for p in sorted_pages %}
-    {% assign filename = p.url | split: '/' %}
-    {% assign filename_no_html = filename.last | remove: '.html' %}
-    <a style="font-size: 1em;" href="{{ p.url | relative_url }}">{{ filename_no_html }}</a><br> 
-{% endfor %}
-<a href="/Novel/{{ page.categories }}/feed.xml">
-    <img src="https://posetmage.com/cdn/icon/rss.svg" width="14" style="border-radius: 30%;">RSS
-</a>
+{% assign url_parts = page.url | split: '/' %}
+{% assign parts_count = url_parts | size | minus: 1 %}
+{% assign base_url_parts = url_parts | slice: 0, parts_count %}
+{% assign toc_folder = base_url_parts | join: '/' %}
+{% assign toc_folder = toc_folder | append: '/' %}
 
+[
+{% assign first_item = true %}
+{% for p in site.pages %}
+  {% if p.url contains toc_folder %}
+    {% if first_item %}
+      {% assign first_item = false %}
+    {% else %},{% endif %}
+    {
+      "title": "{{ p.title | default: p.url | escape }}",
+      "url": "{{ site.baseurl }}{{ p.url }}"
+    }
+  {% endif %}
+{% endfor %}
+]
