@@ -3,7 +3,7 @@ layout: page/note/basic
 ---
 
 <div class="page">
-  {{ content | markdownify }}
+  {{ content }}
 
   <ul>
   {% assign current_path_array = page.url | split: "/" %}
