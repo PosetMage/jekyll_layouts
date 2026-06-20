@@ -1,39 +1,36 @@
 ---
-layout: shell
+layout: base
 ---
 
-<style>
-  #md-raw {
-    margin-left: calc(10%);
-    margin-right: calc(5%);
-    max-width: calc(80%);
-  }
-  .slide {
-    padding: 1em;
-  }
-  #md-src {
-    display: none;
-  }
-</style>
+<script>
+  window.addEventListener('DOMContentLoaded', () => {
+    const header = document.querySelector('.site-header');
+    if (header) header.style.display = 'none';
+
+    const footerWrapper = document.querySelector('.footer-col-wrapper');
+    if (footerWrapper) footerWrapper.style.display = 'none';
+
+    const socialMediaList = document.querySelector('div.social-media-list[inject-root="social-media-list"]');
+    if (socialMediaList) socialMediaList.style.display = 'none';
+
+    // Remove the line between body and footer
+    const footer = document.querySelector('.site-footer');
+    if (footer) {
+      footer.style.borderTop = 'none';
+      footer.style.border = 'none';
+    }
+  });
+</script>
+
+
+<script type="module" src="https://posetmage.com/wc/slides.es.js"></script>
+<script type="module" src="https://posetmage.com/wc/doc_ui.es.js"></script>
+<slides-component></slides-component>
 
 <sidebar-component>
-  <table-of-slides></table-of-slides>
+	<table-of-slides></table-of-slides>
 </sidebar-component>
 
-<slides-component>
-  <div id="md-raw"></div>
-</slides-component>
-
-<textarea id="md-src">
-{{ page.content }}
-</textarea>
-
-<script type="module">
-  import init, { convert } from 'https://homun-lang.github.io/markdown-to-html/markdown_to_html.js';
-  await init();
-  const src = document.getElementById('md-src').value;
-  document.getElementById('md-raw').innerHTML = convert(src);
-
-  await import('https://posetmage.com/wc/slides.es.js');
-  await import('https://posetmage.com/wc/doc_ui.es.js');
-</script>
+<heading-id-injector>
+{{ content }}
+</heading-id-injector>
