@@ -1,36 +1,24 @@
----
-layout: base
----
+<!DOCTYPE html>
+<html lang="{{ page.lang | default: site.lang | default: 'en' }}">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  {%- seo -%}
+  <link rel="stylesheet" href="https://posetmage.com/cdn/css/jekyll.css">
+  {%- feed_meta -%}
+</head>
+<body>
+  <script type="module" src="https://posetmage.com/wc/slides.es.js"></script>
+  <script type="module" src="https://posetmage.com/wc/doc_ui.es.js"></script>
+  <slides-component></slides-component>
 
-<script>
-  window.addEventListener('DOMContentLoaded', () => {
-    const header = document.querySelector('.site-header');
-    if (header) header.style.display = 'none';
+  <sidebar-component>
+    <table-of-slides></table-of-slides>
+  </sidebar-component>
 
-    const footerWrapper = document.querySelector('.footer-col-wrapper');
-    if (footerWrapper) footerWrapper.style.display = 'none';
-
-    const socialMediaList = document.querySelector('div.social-media-list[inject-root="social-media-list"]');
-    if (socialMediaList) socialMediaList.style.display = 'none';
-
-    // Remove the line between body and footer
-    const footer = document.querySelector('.site-footer');
-    if (footer) {
-      footer.style.borderTop = 'none';
-      footer.style.border = 'none';
-    }
-  });
-</script>
-
-
-<script type="module" src="https://posetmage.com/wc/slides.es.js"></script>
-<script type="module" src="https://posetmage.com/wc/doc_ui.es.js"></script>
-<slides-component></slides-component>
-
-<sidebar-component>
-	<table-of-slides></table-of-slides>
-</sidebar-component>
-
-<heading-id-injector>
-{{ content }}
-</heading-id-injector>
+  <heading-id-injector>
+  {{ content }}
+  </heading-id-injector>
+</body>
+</html>
