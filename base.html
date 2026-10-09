@@ -37,16 +37,17 @@
       </div>
 
       <style>
-        /* Let wide Markdown tables scroll without widening the whole page. */
-        .page-content table {
-          max-width: 100%;
-          display: block;
-          overflow-x: auto;
-          -webkit-overflow-scrolling: touch;
+        /* Keep long URLs and unbroken text inside the reading width. */
+        .page-content,
+        .page-content :is(p, li, td, th, a) {
+          overflow-wrap: anywhere;
+          word-break: break-word;
         }
 
-        .page-content table :is(th, td) {
-          white-space: nowrap;
+        .page-content table {
+          width: 100%;
+          max-width: 100%;
+          table-layout: fixed;
         }
 
         .page-content pre {
