@@ -37,6 +37,24 @@
       </div>
 
       <style>
+        /* Keep long URLs and unbroken text inside the reading width. */
+        .page-content,
+        .page-content :is(p, li, td, th, a) {
+          overflow-wrap: anywhere;
+          word-break: break-word;
+        }
+
+        .page-content table {
+          width: 100%;
+          max-width: 100%;
+          table-layout: fixed;
+        }
+
+        .page-content pre {
+          max-width: 100%;
+          overflow-x: auto;
+        }
+
         @media (min-width: 1000px) { /* Adjust this breakpoint as needed */
             .page-content {
               flex-grow: 1; /* Consumes the rest of the space */
